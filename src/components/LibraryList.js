@@ -1,17 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { ListView } from 'react-native';
+import ListItem from './ListItem';
 
 class LibraryList extends Component {
+
+  componentWillMount() {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1,r2) => r1 !== r2
+    });
+    this.dataSource = ds.cloneWithRows(this.props.reduxData);
+  }
+
+  renderRow(library) {
+    return <ListItem library={library} />;
+  }
+
   render() {
-    console.log(this.props); //receive props from mapStateToProps
-    return;
+    //console.log(this.props); //receive props from mapStateToProps
+    return(
+      <ListView
+        dataSource={this.dataSource}
+        renderRow={this.renderRow}
+      />
+  );
   }
 }
 
 const mapStateToProps = state => {
   //takes global state object and return as props
-  return { libraries: state.libraries };
+  return { reduxData: state.libraries };
 };
 
-// first the connect get called, then it returns with the LibraryList
+// first the connect get called,
+// it talks to the Provider and asks for state
+// then it returns the data, as a props,and give it to LibraryList class
 export default connect(mapStateToProps)(LibraryList);
