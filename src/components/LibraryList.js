@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { ListView } from 'react-native';
 import ListItem from './ListItem';
+
+import { connect } from 'react-redux';
 
 class LibraryList extends Component {
 
@@ -17,7 +18,7 @@ class LibraryList extends Component {
   }
 
   render() {
-    //console.log(this.props); //receive props from mapStateToProps
+    console.log(this.props); //receive props from mapStateToProps
     return(
       <ListView
         dataSource={this.dataSource}

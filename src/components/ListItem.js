@@ -6,8 +6,13 @@ import {
 import CardSection from './common/CardSection';
 import Card from './common/Card';
 
+//include the action creator here for the SelectionReducer
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+
 class ListItem extends Component {
   render() {
+    console.log(this.props); //result of connected actions
     const { titleStyle } = styles;
     return(
       <CardSection>
@@ -24,4 +29,6 @@ const styles = {
   }
 }
 
-export default ListItem;
+export default connect(null, actions)(ListItem);
+//first argument is explicily for mapStateToProps
+//second argument is for actions object and return to the component as props
