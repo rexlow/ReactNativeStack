@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text
+  Text,
+  TouchableWithoutFeedback
 } from 'react-native';
 import CardSection from './common/CardSection';
 import Card from './common/Card';
@@ -12,12 +13,20 @@ import * as actions from '../actions';
 
 class ListItem extends Component {
   render() {
-    console.log(this.props); //result of connected actions
+    //console.log(this.props); //result of connected actions
+
+    const { id, title } = this.props.library;
+
     const { titleStyle } = styles;
     return(
-      <CardSection>
-        <Text style={titleStyle}>{this.props.library.title}</Text>
-      </CardSection>
+      <TouchableWithoutFeedback
+        onPress={() => this.props.selectLibrary(id)}>
+        <View>
+          <CardSection>
+            <Text style={titleStyle}>{title}</Text>
+          </CardSection>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 };
