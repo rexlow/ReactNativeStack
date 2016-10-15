@@ -12,12 +12,21 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class ListItem extends Component {
+  renderDescription() {
+    const { expanded, library } = this.props;
+    if (expanded) {
+      return (
+        <Text>{library.description}</Text>
+      )
+    }
+  }
+
   render() {
-    //console.log(this.props); //result of connected actions
+    console.log(this.props); //result of connected actions
 
     const { id, title } = this.props.library;
-
     const { titleStyle } = styles;
+
     return(
       <TouchableWithoutFeedback
         onPress={() => this.props.selectLibrary(id)}>
@@ -25,6 +34,7 @@ class ListItem extends Component {
           <CardSection>
             <Text style={titleStyle}>{title}</Text>
           </CardSection>
+          {this.renderDescription()}
         </View>
       </TouchableWithoutFeedback>
     )
@@ -38,6 +48,11 @@ const styles = {
   }
 }
 
-export default connect(null, actions)(ListItem);
+const mapStateToProps = (state, ownProps) => {
+  const expanded = state.selectedLibraryID === ownProps.library.id;
+  return { expanded }
+}
+
+export default connect(mapStateToProps, actions)(ListItem);
 //first argument is explicily for mapStateToProps
 //second argument is for actions object and return to the component as props
